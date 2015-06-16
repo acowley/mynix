@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
           sha256 = "80c7a7686c7556a5c9e7be538f3f274bbf36316c7ebd63e61f609a2603d08f63";
         };
   buildInputs = [stdenv.cc ghc curl which cacert];
-  CURL_CA_BUNDLE="${cacert}/etc/ca-bundle.crt";
+  CURL_CA_BUNDLE="${cacert}/etc/ssl/certs/ca-bundle.crt";
   LD="${stdenv.cc}/bin/ld";
   PLAT= if stdenv.isDarwin then
           "x86_64-osx"
