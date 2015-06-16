@@ -1,4 +1,4 @@
-{stdenv, fetchurl, gmp, ncurses, perl, libiconv}:
+{stdenv, fetchurl, gmp, ncurses, perl, libiconv, llvm_35}:
 
 stdenv.mkDerivation rec {
   version = "7.10.1";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
           }
         else throw "No binary GHC for this platform yet";
 
-  buildInputs = [perl];
+  buildInputs = [perl llvm_35];
 
   # This is copied from the ghc-7.4.2-binary Nix expression
   postUnpack =
@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
      '';
 
   configurePhase = ''
-    LDFLAGS=-L${libiconv}/lib ./configure --prefix=$out \
+    LDFLAGS=-L${libiconv}/lib LlcCmd=${llvm_35}/bin/llc OptCmd=${llvm_35}/bin/opt ./configure --prefix=$out \
       --with-gmp-libraries=${gmp}/lib --with-gmp-includes=${gmp}/include \
       ${stdenv.lib.optionalString stdenv.isDarwin "--with-gcc=$CC"} \
   '';
