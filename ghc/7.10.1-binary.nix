@@ -10,7 +10,8 @@ stdenv.mkDerivation rec {
           }
         else throw "No binary GHC for this platform yet";
 
-  buildInputs = [perl llvm_35];
+  buildInputs = [perl];
+  propagatedBuildInputs = [llvm_35];
 
   # This is copied from the ghc-7.4.2-binary Nix expression
   postUnpack =
